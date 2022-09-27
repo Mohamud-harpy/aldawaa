@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">AlDawaa</string>
+    <string name="facebook_app_id">1258428858321843</string>
+    <string name="fb_login_protocol_scheme">fb1258428858321843</string>
+    <string name="facebook_client_token">f5e750f85255108e68642226b55a70a7</string>
+    <string name="wellcometoaldawaa">Wellcome to Al-Dawaa</string>
+
+    <string name="signintap">Login</string>
+    <string name="signuptap">Sign up</string>
+    <string name="enteryouremail">Enter Your Email</string>
+    <string name="enteryourpass">Enter Your Password</string>
+    <string name="signinorg">Login</string>
+    <string name="orsigninwith">Or Sign in With</string>
+    <string name="continueasaguest">Continue as a Guest</string>
+    <string name="signuporg">Sign up</string>
+    <string name="name">Name</string>
+    <string name="phonenumber">Phone Number</string>
+    <string name="forgetmypassword">Forgot Password ?</string>
+    <string name="rememberme">Remember me</string>
+
+
+
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string name="app_name">الدواء</string>
+    <string name="wellcometoaldawaa">"مرحبا بك فى الدواء "</string>
+
+    <string name="signuptap">الاشتراك</string>
+    <string name="signintap">"تسجيل الدخول "</string>
+    <string name="enteryouremail">ادخل البريد الالكترونى</string>
+    <string name="enteryourpass">ادخل الرقم السرى</string>
+    <string name="signinorg">دخول</string>
+    <string name="orsigninwith">او يمكن التسجيل عن طريق</string>
+    <string name="continueasaguest">الدخول كا زائر</string>
+    <string name="signuporg">"تسجيل "</string>
+    <string name="name">"الاسم "</string>
+    <string name="phonenumber">"رقم الهاتف "</string>
+    <string name="forgetmypassword">"نسيت الرقم السرى "</string>
+    <string name="rememberme">"تذكرنى "</string>
+
+</resources>
