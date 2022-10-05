@@ -7,4 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="textcolor">#ff002544</color>
+    <color name="titlegender">#19002544</color>
+    <color name="logintabc">#ffffc200</color>
+    <color name="labelcolor">#fff3f5f6</color>
+    <color name="labelcolor1">#0c002544</color>
+
+
+
 </resources>

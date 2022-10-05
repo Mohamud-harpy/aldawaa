@@ -15,7 +15,19 @@
     <string name="signuporg">"تسجيل "</string>
     <string name="name">"الاسم "</string>
     <string name="phonenumber">"رقم الهاتف "</string>
-    <string name="forgetmypassword">"نسيت الرقم السرى "</string>
+    <string name="forgetmypassword">"نسيت الرقم السرى؟ "</string>
     <string name="rememberme">"تذكرنى "</string>
+    <string name="Subscribeto">"الاشتراك عن طريق الاميل "</string>
+    <string name="title">لقب</string>
+    <string name="title1">لقب 1</string>
+    <string name="title2">لقب 2</string>
+    <string name="gender">النوع</string>
+    <string name="male">"ذكر "</string>
+    <string name="female">"انثى "</string>
+    <string name="confirmpassword">تاكيد الرقم السرى </string>
+    <string name="birthdate">"تاريخ الميلاد "</string>
+    <string name="forgetpassword">"تعيين الرقم السرى "</string>
+    <string name="forgetsend">ارسل</string>
+
 
 </resources>

@@ -7,16 +7,32 @@
 
     <string name="signintap">Login</string>
     <string name="signuptap">Sign up</string>
-    <string name="enteryouremail">Enter Your Email</string>
-    <string name="enteryourpass">Enter Your Password</string>
+    <string name="enteryouremail"> E-mail</string>
+    <string name="enteryourpass"> Password</string>
     <string name="signinorg">Login</string>
     <string name="orsigninwith">Or Sign in With</string>
     <string name="continueasaguest">Continue as a Guest</string>
-    <string name="signuporg">Sign up</string>
+    <string name="signuporg">Create account</string>
     <string name="name">Name</string>
-    <string name="phonenumber">Phone Number</string>
+    <string name="phonenumber">Phone number</string>
     <string name="forgetmypassword">Forgot Password ?</string>
     <string name="rememberme">Remember me</string>
+    <string name="Subscribeto">Subscribe to e-mail newletters</string>
+    <string name="title">Title</string>
+    <string name="title1">title1</string>
+    <string name="title2">title2</string>
+    <string name="gender">Gender</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="confirmpassword">Confirm password</string>
+    <string name="birthdate">BirthDay</string>
+    <string name="forgetpassword">Forgot Password</string>
+    <string name="forgetsend">Send</string>
+
+
+
+
+
 
 
 

@@ -15,8 +15,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.akexorcist.localizationactivity.core.LocalizationActivityDelegate
-import com.example.aldawaa.ui.theme.AlDawaaTheme
-import com.example.aldawaa.view.Loginpage
+import com.example.aldawaa.presentation.ui.theme.AlDawaaTheme
+import com.example.aldawaa.presentation.screen.Forgetpassword.ForgetPassword
+import com.example.aldawaa.presentation.screen.loginscreen.Loginpage
 import com.facebook.CallbackManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
@@ -56,7 +57,7 @@ private val localizationDelegate = LocalizationActivityDelegate(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+//twitter
         GlobalScope.launch {
             val results = GlobalScope.async { isLoggedIn() }
             val result = results.await()
@@ -78,7 +79,7 @@ private val localizationDelegate = LocalizationActivityDelegate(this)
         }
     }
 
-
+//twitter
     private suspend fun isLoggedIn(): Boolean {
         val sharedPref = this.getPreferences(Context.MODE_PRIVATE)
         val accessToken = sharedPref.getString("oauth_token","")
@@ -100,9 +101,82 @@ private val localizationDelegate = LocalizationActivityDelegate(this)
     }
 
 
+/*
+    @Suppress("OverridingDeprecatedMember")
+    inner class TwitterWebViewClient : WebViewClient() {
+        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+        override fun shouldOverrideUrlLoading(
+            view: WebView?,
+            request: WebResourceRequest?
+        ): Boolean {
+            if (request?.url.toString().startsWith(TwitterConstants.CALLBACK_URL)) {
+                Log.d("Authorization URL: ", request?.url.toString())
+                handleUrl(request?.url.toString())
+                // Close the dialog after getting the oauth_verifier
+                if (request?.url.toString().contains(TwitterConstants.CALLBACK_URL)) {
+                    twitterDialog.dismiss()
+                }
+                return true
+            }
+            return false
+        }*/
+      /*  // For API 19 and below
+        @Deprecated("Deprecated in Java")
+        override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+            if (url.startsWith(TwitterConstants.CALLBACK_URL)) {
+                Log.d("Authorization URL: ", url)
+                handleUrl(url)
+                // Close the dialog after getting the oauth_verifier
+                if (url.contains(TwitterConstants.CALLBACK_URL)) {
+                    twitterDialog.dismiss()
+                }
+                return true
+            }
+            return false
+        }
+       var accToken: AccessToken?=null
+        // Get the oauth_verifier
+        private fun handleUrl(url: String) {
+
+            val uri = Uri.parse(url)
+            val oauthVerifier = uri.getQueryParameter("oauth_verifier") ?: ""
+            GlobalScope.launch(Dispatchers.Main) {
+            //    accToken = withContext(Dispatchers.IO) { twitter.getOAuthAccessToken(oauthVerifier) }
+                getUserProfile()
+            }
+        }
+
+        private suspend fun getUserProfile() {
+            val usr = withContext(Dispatchers.IO) { twitter.verifyCredentials() }
+            //Twitter Id
+            val twitterId = usr.id.toString()
+            Log.d("Twitter Id: ", twitterId)
+
+            //Twitter Handle
+            val twitterHandle = usr.screenName
+            Log.d("Twitter Handle: ", twitterHandle)
+            //Twitter Name
+            val twitterName = usr.name
+            Log.d("Twitter Name: ", twitterName)
+            //Twitter Email
+            val twitterEmail = usr.email
+            Log.d("Twitter Email: ", twitterEmail ?: "'Request email address from users' on the Twitter dashboard is disabled")
+            // Twitter Profile Pic URL
+            val twitterProfilePic = usr.profileImageURLHttps.replace("_normal", "")
+            Log.d("Twitter Profile URL: ", twitterProfilePic)
+            // Twitter Access Token
+          //  Log.d("Twitter Access Token", accToken1)
+            // Log.d("Twitter Access Token", accToken1)
+
+            *//* val sharedPref = this.getPreferences(Context.MODE_PRIVATE)
+             sharedPref.edit().putString("oauth_token",accToken?.token ?: "").apply()
+             sharedPref.edit().putString("oauth_token_secret",accToken?.tokenSecret ?: "").apply()*//*
 
 
+        }
+    }
 
+*/
 }
 
 object FacebookUtil {
@@ -114,6 +188,7 @@ object FacebookUtil {
 
 
 
+@DelicateCoroutinesApi
 @ExperimentalMaterialApi
 @Preview
 @Composable
@@ -121,13 +196,12 @@ fun Navigatpage(){
     val navController= rememberNavController()
     NavHost(navController = navController, startDestination = "Login_page",
         builder = {
-            composable("Login_page", content = { Loginpage(navController = navController)})
-            composable("Home_Screen", content = {  })
+            composable("Login_page", content = { Loginpage(navController = navController) })
+            composable("Forget_Password", content = { ForgetPassword(navController = navController)  })
 
 
         }
     )
 }
-
 
 

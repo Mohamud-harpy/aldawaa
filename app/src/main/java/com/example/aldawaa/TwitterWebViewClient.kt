@@ -1,16 +1,15 @@
-package com.example.aldawaa
 
+package com.example.aldawaa
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
-import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.example.aldawaa.view.twitter
-import com.example.aldawaa.view.twitterDialog
+import com.example.aldawaa.presentation.screen.loginscreen.twitter
+import com.example.aldawaa.presentation.screen.loginscreen.twitterDialog
 import com.facebook.AccessToken
 import kotlinx.coroutines.*
 
@@ -59,7 +58,7 @@ class TwitterWebViewClient : WebViewClient() {
 
         val uri = Uri.parse(url)
         val oauthVerifier = uri.getQueryParameter("oauth_verifier") ?:""
-        GlobalScope.launch(Dispatchers.IO) {
+        GlobalScope.launch(Dispatchers.Main) {
          //   accToken = twitter.getOAuthAccessToken(oauthVerifier).token
        accToken1  =    twitter.getOAuthAccessToken(oauthVerifier).tokenSecret
 
@@ -89,9 +88,10 @@ class TwitterWebViewClient : WebViewClient() {
         Log.d("Twitter Access Token", accToken1)
        // Log.d("Twitter Access Token", accToken1)
 
-       /* val sharedPref = this.getPreferences(Context.MODE_PRIVATE)
+ /*val sharedPref = this.getPreferences(Context.MODE_PRIVATE)
         sharedPref.edit().putString("oauth_token",accToken?.token ?: "").apply()
-        sharedPref.edit().putString("oauth_token_secret",accToken?.tokenSecret ?: "").apply()*/
+        sharedPref.edit().putString("oauth_token_secret",accToken?.tokenSecret ?: "").apply()
+*/
 
 
     }
