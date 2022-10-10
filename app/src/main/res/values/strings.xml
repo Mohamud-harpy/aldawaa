@@ -27,7 +27,15 @@
     <string name="confirmpassword">Confirm password</string>
     <string name="birthdate">BirthDay</string>
     <string name="forgetpassword">Forgot Password</string>
+    <string name="forgetdontrec">Don\'t you receive any code</string>
+    <string name="recendcode">Resend code</string>
     <string name="forgetsend">Send</string>
+    <string name="enternewpass"> Enter new password</string>
+    <string name="enternewpassagain"> Enter new password again</string>
+    <string name="yourpasswordchanged"> Your password has succesfully </string>
+    <string name="yourpasswordchanged2"> changed!</string>
+
+    <string name="backtohome"> Back to home</string>
 
 
 

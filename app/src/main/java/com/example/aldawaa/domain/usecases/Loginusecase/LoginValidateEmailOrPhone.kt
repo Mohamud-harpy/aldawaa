@@ -3,7 +3,6 @@ package com.example.aldawaa.domain.usecases.Loginusecase
 import android.util.Patterns
 
 class LoginValidateEmailOrPhone {
-
     fun execute(emailorphone: String): LoginValidationResult {
         if(emailorphone.isBlank()) {
             return LoginValidationResult(

@@ -28,6 +28,13 @@
     <string name="birthdate">"تاريخ الميلاد "</string>
     <string name="forgetpassword">"تعيين الرقم السرى "</string>
     <string name="forgetsend">ارسل</string>
+    <string name="recendcode">ارسل مرة اخرى</string>
+    <string name="forgetdontrec">لم تتلقى اى رمز امان</string>
+    <string name="enternewpass">ادخل رقم سرى جديد</string>
+    <string name="enternewpassagain">دخل رقم سرى جديد مرة اخرى</string>
+    <string name="yourpasswordchanged">"تم تغيير الرقم السرى "</string>
+    <string name="backtohome">"الى الصفحة الرئيسية "</string>
+    <string name="yourpasswordchanged2">بنجاح</string>
 
 
 </resources>

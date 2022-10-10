@@ -26,10 +26,14 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.aldawaa.R
 import com.example.aldawaa.presentation.ui.theme.*
+import com.example.aldawaa.utils.ValidationHelper
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun ForgetPassword (navController: NavController) {
+
+    val validationHelper : ValidationHelper = ValidationHelper()
+
     val context = LocalContext.current
     val scaffoldState = rememberScaffoldState()
     var isErrorforget by rememberSaveable { mutableStateOf(false) }
@@ -81,7 +85,7 @@ fun ForgetPassword (navController: NavController) {
                 verticalArrangement = Arrangement.Top,
 
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxHeight()
                     .fillMaxWidth()
                     .clip(
                         shape = Shapes.large.copy(
@@ -92,95 +96,92 @@ fun ForgetPassword (navController: NavController) {
                     // .background(color = White)
                     .paint(
                         painterResource(id = R.drawable.group),
-                        contentScale = ContentScale.FillBounds
-                    )
+                        contentScale = ContentScale.FillBounds,
+
+                        )
 
 
             ) {
                 Spacer(modifier = Modifier.padding(15.dp))
 
-                OutlinedTextField(
+                    OutlinedTextField(
 
-                    value = forgetphone.value,
-                    onValueChange = {
-                        forgetphone.value = it
-                        isErrorforget = false
-                    },
-                    placeholder = {
-                        Text(
-                            text = stringResource(id = R.string.phonenumber),
-                            color = lablehint
+                        value = forgetphone.value,
+                        onValueChange = {
+                            forgetphone.value = it
+                            isErrorforget = false
+                        },
+                        placeholder = {
+                            Text(
+                                text = stringResource(id = R.string.phonenumber),
+                                color = lablehint
+                            )
+                        },
+                        isError = isErrorforget,
+                        // keyboardActions = KeyboardActions { validate(emailorphone.value) },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+
+                        singleLine = true,
+                        modifier = Modifier
+                            .fillMaxWidth(0.9f)
+                            .clip(shape = Shapesaaldawaa.small)
+                            .height(53.dp)
+                            .background(color = labelcolor),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            focusedBorderColor = Color.Transparent,
+                            unfocusedBorderColor = Color.Transparent
+                        ), shape = Shapesaaldawaa.small
+                    )
+                    if (isErrorforget) Text(
+                        modifier = Modifier
+                            .fillMaxWidth(0.9f)
+                            // .align(alignment = Alignment.TopStart)
+                            .padding(start = 20.dp),
+                        text = "phone is empty",
+                        color = errormessege,
+
                         )
-                    },
-                    isError = isErrorforget,
-                    // keyboardActions = KeyboardActions { validate(emailorphone.value) },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-
-                    singleLine = true,
-                    modifier = Modifier
-                        .fillMaxWidth(0.9f)
-                        .clip(shape = Shapesaaldawaa.small)
-                        .height(51.dp)
-                        .background(color = labelcolor),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = Color.Transparent,
-                        unfocusedBorderColor = Color.Transparent
-                    ), shape = Shapesaaldawaa.small
-                )
-                if (isErrorforget) Text(
-                    modifier = Modifier
-                        .fillMaxWidth(0.9f)
-                        .align(alignment = Alignment.Start)
-                        .padding(start = 20.dp),
-                    text = "phone is empty",
-                    color = errormessege,
-
-                    )
-
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Bottom,
-
-                ) {
-
-                OutlinedButton(
-                    modifier = Modifier
-                        .fillMaxWidth(0.9f)
-                        .height(51.dp)
-                        .clip(shape = Shapesaaldawaa.small)
-                        .align(alignment = Alignment.CenterHorizontally),
-                    colors = ButtonDefaults.outlinedButtonColors(Color.Transparent),
-                    shape = Shapesaaldawaa.small,
-                    border = BorderStroke(2.dp, textcolor),
-
-                    onClick = {
-                        when {
-
-                            forgetphone.value.isEmpty() -> {
-                                isErrorforget = true
-                            }
-                            else ->
-                                navController.navigate("home")
-                        }
-                        Toast.makeText(context, "user logged in ", Toast.LENGTH_SHORT).show()
-
-                    },
 
 
-                    ) {
-                    Text(
-                        text = stringResource(id = R.string.forgetsend),
-                        fontSize = 20.sp,
-                        color = textcolor,
-                    )
+                     Spacer(modifier = Modifier.padding(vertical = 120.dp))
+
+                    OutlinedButton(
+                        modifier = Modifier
+                            .fillMaxWidth(0.9f)
+                            .height(53.dp)
+                            .clip(shape = Shapesaaldawaa.small),
+                        colors = ButtonDefaults.outlinedButtonColors(Color.Transparent),
+                        shape = Shapesaaldawaa.small,
+                        border = BorderStroke(2.dp, textcolor),
+
+                        onClick = {
+
+
+                                if (!validationHelper.phonenumvalidation(forgetphone.value)){
+                                    isErrorforget = true
+                                }
+                                else {
+                                    navController.navigate("Forget_Password_Otp")
+
+                                    Toast.makeText(context, "code sent ", Toast.LENGTH_SHORT).show()
+                                }
+
+                        },
+
+
+                        ) {
+                        Text(
+                            text = stringResource(id = R.string.forgetsend),
+                            fontSize = 20.sp,
+                            color = textcolor,
+                        )
+
+
+                    }
                 }
-
-                }
-
-
             }
         }
-        }
-
     }
+
+
 

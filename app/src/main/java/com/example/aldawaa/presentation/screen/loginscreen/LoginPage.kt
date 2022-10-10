@@ -45,6 +45,7 @@ import com.example.aldawaa.FacebookUtil
 import com.example.aldawaa.R
 import com.example.aldawaa.TwitterConstants
 import com.example.aldawaa.TwitterWebViewClient
+import com.example.aldawaa.presentation.screen.signupscreen.Signup
 import com.example.aldawaa.presentation.ui.AuthScreen
 import com.example.aldawaa.presentation.ui.theme.Shapes
 import com.example.aldawaa.presentation.ui.theme.Shapesaaldawaa
@@ -52,6 +53,8 @@ import com.example.aldawaa.presentation.ui.theme.logintabc
 import com.example.aldawaa.presentation.ui.theme.textcolor
 import com.example.aldawaa.presentation.screen.twitterscreen.AuthViewModel
 import com.facebook.*
+import com.facebook.FacebookSdk.getApplicationContext
+import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
 import kotlinx.coroutines.*
@@ -68,6 +71,8 @@ import java.util.*
 @SuppressLint("ResourceType", "UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun Loginpage(navController: NavController) {
+   // FacebookSdk.sdkInitialize(getApplicationContext());
+
     val authViewModel: AuthViewModel = hiltViewModel()
     var expanded by remember { mutableStateOf(false) }
     val context = LocalContext.current
@@ -122,6 +127,8 @@ fun Loginpage(navController: NavController) {
             Spacer(modifier = Modifier.padding(6.dp))
 
 
+        Box() {
+
 
             OutlinedButton(
                 colors = ButtonDefaults.buttonColors(backgroundColor = Transparent),
@@ -157,7 +164,7 @@ fun Loginpage(navController: NavController) {
                                 chosenlanguage = label
 
                             }
-                            "Arabic" -> {
+                            "العربية" -> {
                                 chosenlanguage = label
                                 setLanguage(context, Locale("ar"))
                                 (context as? Activity)?.recreate()
@@ -169,7 +176,7 @@ fun Loginpage(navController: NavController) {
                     }
                 }
             }
-
+        }
 
             Spacer(modifier = Modifier.padding(10.dp))
 
@@ -181,7 +188,7 @@ fun Loginpage(navController: NavController) {
                     .fillMaxSize()
                     .fillMaxWidth()
                     .clip(
-                        shape = RoundedCornerShape(50.dp).copy(
+                        shape = Shapes.large.copy(
                             bottomStart = ZeroCornerSize,
                             bottomEnd = ZeroCornerSize
                         )
@@ -209,7 +216,7 @@ fun Loginpage(navController: NavController) {
                     modifier = Modifier
                         .fillMaxWidth(0.9f)
                         .clip(RoundedCornerShape(50))
-                        .padding(1.dp),
+                        ,
                     divider = { TabRowDefaults.Divider(color = Transparent) },
                     indicator = { tabPositions: List<TabPosition> ->
 
@@ -245,10 +252,11 @@ fun Loginpage(navController: NavController) {
                     }
 
                     1 -> {
-                       // Signup(navController = navController)
+                         Signup(navController = navController)
                     }
                 }
                 Spacer(modifier = Modifier.padding(10.dp))
+
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
@@ -256,7 +264,32 @@ fun Loginpage(navController: NavController) {
                 ) {
 
 
-                    Text(
+                 /*   OutlinedButton(
+                        modifier = Modifier
+                            .fillMaxWidth(0.9f)
+                            .height(53.dp)
+                            .clip(shape = Shapesaaldawaa.small),
+                        colors = ButtonDefaults.outlinedButtonColors(Color.Transparent),
+                        shape = Shapesaaldawaa.small,
+                        border = BorderStroke(2.dp, textcolor),
+
+                        onClick = {
+                            LoginManager.getInstance().logOut()
+
+
+                        },
+
+
+                        ) {
+                        Text(
+                            text = "Logout",
+                            fontSize = 20.sp,
+                            color = textcolor,
+                        )
+                    }*/
+
+
+                        Text(
                         text = stringResource(id = R.string.orsigninwith),
                         fontSize = 15.sp,
                         color = textcolor,
@@ -351,6 +384,7 @@ fun CustomFacebookButton(
             button.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
                 override fun onSuccess(result: LoginResult) {
                     onSuccess(result)
+
                     val profile = Profile.getCurrentProfile()
                     if (profile != null) {
                         val firstName = profile.firstName
@@ -395,6 +429,9 @@ fun CustomFacebookButton(
 
                     Log.e("facebook : ", result.accessToken.userId)
 
+
+
+
                 }
 
                 override fun onCancel() {
@@ -406,8 +443,12 @@ fun CustomFacebookButton(
                     onError(error)
                     Log.e("on error :", " ${error?.localizedMessage}")
                 }
+
+
             })
+
         }
+
     )
 
 }

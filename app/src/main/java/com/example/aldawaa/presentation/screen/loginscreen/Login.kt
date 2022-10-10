@@ -16,9 +16,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.*
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -26,13 +29,15 @@ import androidx.navigation.NavController
 import com.example.aldawaa.R
 import com.example.aldawaa.presentation.screen.loginscreen.component.LoginFormEvent
 import com.example.aldawaa.presentation.ui.theme.*
+import com.example.aldawaa.utils.ValidationHelper
 
 //login box
 @Composable
 fun Login(navController: NavController) {
-    val loginViewModel :LoginViewModel = hiltViewModel()
+    val validationHelper : ValidationHelper = ValidationHelper()
+
+    /*val loginViewModel :LoginViewModel = hiltViewModel()
     val state = loginViewModel.state
-    val context = LocalContext.current
     LaunchedEffect(key1 = context) {
         loginViewModel.validationEvents.collect { event ->
             when (event) {
@@ -45,13 +50,15 @@ fun Login(navController: NavController) {
                 }
             }
         }
-    }
+    }*/
+
+    val context = LocalContext.current
     val passwordvisibilitylogin = remember { mutableStateOf(false) }
     val checkboxremember = remember { mutableStateOf(false) }
-   /* val password = rememberSaveable { mutableStateOf("") }
+    val loginpassword = rememberSaveable { mutableStateOf("") }
     var isErrorloginmail by rememberSaveable { mutableStateOf(false) }
     var isErrorloginpass by rememberSaveable { mutableStateOf(false) }
-    val emailorphone = rememberSaveable { mutableStateOf("") }*/
+    val loginemailorphone = rememberSaveable { mutableStateOf("") }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -65,10 +72,10 @@ fun Login(navController: NavController) {
 
         OutlinedTextField(
 
-            value = state.loginemailorphone,
+            value = loginemailorphone.value,
             onValueChange = {
-                loginViewModel.onEvent(LoginFormEvent.LoginEmailOrPhoneChanged(it))
-
+                loginemailorphone.value= it
+                isErrorloginmail=false
             },
             placeholder = {
                 Text(
@@ -76,27 +83,29 @@ fun Login(navController: NavController) {
                     color = lablehint
                 )
             },
-            isError = state.loginemailorphoneError != null,
+            isError = isErrorloginmail,
             // keyboardActions = KeyboardActions { validate(emailorphone.value) },
-
+            keyboardOptions = KeyboardOptions( keyboardType = KeyboardType.Text),
+            textStyle = TextStyle.Default.copy(),
             singleLine = true,
             modifier = Modifier
                 .fillMaxWidth(0.9f)
                 .clip(shape = Shapesaaldawaa.small)
-                .height(51.dp)
+                .height(53.dp)
                 .background(color = labelcolor),
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = Color.Transparent,
                 unfocusedBorderColor = Color.Transparent
             ), shape = Shapesaaldawaa.small
         )
-        if (state.loginemailorphoneError != null) Text(
+        if (isErrorloginmail) Text(
             modifier = Modifier
                 .fillMaxWidth(0.9f)
                 .align(alignment = Alignment.Start)
                 .padding(start = 20.dp),
-            text = state.loginemailorphoneError,
+            text = "mail or phone error",
             color = errormessege,
+            fontSize = 12.sp
 
             )
 
@@ -105,9 +114,9 @@ fun Login(navController: NavController) {
 
         OutlinedTextField(
 
-            value = state.loginpassword,
+            value = loginpassword.value,
             onValueChange = {
-                loginViewModel.onEvent(LoginFormEvent.LoginEmailOrPhoneChanged(it))
+                loginpassword.value= it
             },
             placeholder = {
                 Text(
@@ -115,14 +124,14 @@ fun Login(navController: NavController) {
                     color = lablehint
                 )
             },
-            isError = state.loginpasswordError != null,
+            isError = isErrorloginpass,
             // keyboardActions = KeyboardActions { validate(password.value) },
 
             keyboardOptions = KeyboardOptions( keyboardType = KeyboardType.Password),
             singleLine = true,
             modifier = Modifier
                 .fillMaxWidth(0.9f)
-                .height(51.dp)
+                .height(53.dp)
                 .clip(shape = Shapesaaldawaa.small)
                 .background(
                     color = labelcolor
@@ -155,13 +164,14 @@ fun Login(navController: NavController) {
             visualTransformation = if (passwordvisibilitylogin.value) VisualTransformation.None else PasswordVisualTransformation()
 
         )
-        if (state.loginpasswordError != null) Text(
+        if (isErrorloginpass) Text(
             modifier = Modifier
                 .fillMaxWidth(0.9f)
                 .align(alignment = Alignment.Start)
                 .padding(start = 20.dp),
-            text = state.loginpasswordError,
+            text = "password error",
             color = errormessege,
+            fontSize = 12.sp
 
             )
 
@@ -204,16 +214,26 @@ fun Login(navController: NavController) {
         OutlinedButton(
             modifier = Modifier
                 .fillMaxWidth(0.9f)
-                .height(51.dp)
+                .height(53.dp)
                 .clip(shape = Shapesaaldawaa.small),
             colors = ButtonDefaults.outlinedButtonColors(Color.Transparent),
             shape = Shapesaaldawaa.small,
             border = BorderStroke(2.dp, textcolor),
 
             onClick = {
-                loginViewModel.onEvent(LoginFormEvent.login)
+                if ( !validationHelper.emailorphonevalidation(loginemailorphone.value))  {
+                    isErrorloginmail = true
+                }
+                if (!validationHelper.passwordlvalidation(loginpassword.value)) {
+                    isErrorloginpass = true
+                }
 
-                Toast.makeText(context, "user logged in ", Toast.LENGTH_SHORT).show()
+                else {
+                    //navController.navigate("home")
+                    Toast.makeText(context, "user logged in ", Toast.LENGTH_SHORT).show()
+                }
+
+
 
             },
 

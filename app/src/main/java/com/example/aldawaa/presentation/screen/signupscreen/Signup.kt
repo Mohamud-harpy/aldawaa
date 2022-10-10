@@ -1,4 +1,4 @@
-/*
+
 package com.example.aldawaa.presentation.screen.signupscreen
 
 import android.app.DatePickerDialog
@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -17,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -31,42 +33,46 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.aldawaa.R
 import com.example.aldawaa.presentation.screen.loginscreen.LoginViewModel
+import com.example.aldawaa.presentation.screen.loginscreen.component.LoginFormEvent
+import com.example.aldawaa.presentation.screen.signupscreen.component.SignupFormEvent
 import com.example.aldawaa.presentation.ui.theme.*
+import com.example.aldawaa.utils.ValidationHelper
 import java.util.*
 
 // signup box
 @Composable
 fun Signup(navController: NavController) {
+    val validationHelper : ValidationHelper = ValidationHelper()
     var expandedtitle by remember { mutableStateOf(false) }
     var expandedgender by remember { mutableStateOf(false) }
-    var chosentitle by remember { mutableStateOf("Title") }
-    var chosengender by remember { mutableStateOf("Gender") }
-    val gender = listOf(stringResource(id = R.string.male), stringResource(id = R.string.female))
-    val title = listOf(stringResource(id = R.string.title1), stringResource(id = R.string.title2))
-    val checkboxsubscribe = remember { mutableStateOf(false) }
+    val gender = listOf(stringResource(id = R.string.male).toString(), stringResource(id = R.string.female).toString())
+    val title = listOf(stringResource(id = R.string.title1).toString(), stringResource(id = R.string.title2).toString())
+    var chosentitle by remember { mutableStateOf(title[0]) }
+    var chosengender by remember { mutableStateOf(gender[0]) }
+    val checkboxsubscribe = rememberSaveable { mutableStateOf(false) }
     val passwordvisibilitysignup = remember { mutableStateOf(false) }
     val confirmpasswordvisibilitysignup = remember { mutableStateOf(false) }
-*/
-/*
+    val signupmyBirthDate = rememberSaveable { mutableStateOf("") }
+    val signuname = rememberSaveable { mutableStateOf("") }
+    val signupphonenum = rememberSaveable { mutableStateOf("") }
+    val signupemail = rememberSaveable { mutableStateOf("") }
+    val signuppassword = remember { mutableStateOf("") }
+    val signupconfirmpassword = remember { mutableStateOf("") }
 
-    val myBirthDate = remember { mutableStateOf("") }
-    val name = rememberSaveable { mutableStateOf("") }
-    val phonenum = remember { mutableStateOf("") }
-    val email = rememberSaveable { mutableStateOf("") }
-    val passwordsignup = remember { mutableStateOf("") }
     var isErrorsignupname by rememberSaveable { mutableStateOf(false) }
-    var isErrorsignuptitle by rememberSaveable { mutableStateOf(false) }
-    var isErrorsignupgender by rememberSaveable { mutableStateOf(false) }
+  //  var isErrorsignuptitle by rememberSaveable { mutableStateOf(false) }
+   // var isErrorsignupgender by rememberSaveable { mutableStateOf(false) }
     var isErrorsignupemail by rememberSaveable { mutableStateOf(false) }
     var isErrorsignupphone by rememberSaveable { mutableStateOf(false) }
     var isErrorsignupbirth by rememberSaveable { mutableStateOf(false) }
     var isErrorsignuppass by rememberSaveable { mutableStateOf(false) }
     var isErrorsignupconfirmpass by rememberSaveable { mutableStateOf(false) }
-*//*
 
-    val signupViewModel : SignupViewModel = hiltViewModel()
-    val state = signupViewModel.state
     val context = LocalContext.current
+
+   /* val signupViewModel : SignupViewModel = hiltViewModel()
+    val state = signupViewModel.state
+
     LaunchedEffect(key1 = context) {
         signupViewModel.validationEvents.collect { event ->
             when (event) {
@@ -80,7 +86,7 @@ fun Signup(navController: NavController) {
             }
         }
     }
-
+*/
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -93,15 +99,16 @@ fun Signup(navController: NavController) {
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.background(Color.Transparent)
+            modifier = Modifier.background(Transparent)
         ) {
 
             OutlinedTextField(
 
-                value = name.value,
+                value = signuname.value,
                 onValueChange = {
-                    name.value = it
+                    signuname.value = it
                     isErrorsignupname = false
+
                 },
                 placeholder = {
                     Text(
@@ -111,17 +118,14 @@ fun Signup(navController: NavController) {
                 },
                 isError = isErrorsignupname,
                 //  keyboardActions = KeyboardActions { validate(name.value) },
+                keyboardOptions = KeyboardOptions( keyboardType = KeyboardType.Text),
+
                 singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth(0.9f)
                     .clip(shape = Shapesaaldawaa.small)
-                    .height(51.dp)
+                    .height(53.dp)
                     .background(color = labelcolor),
-                */
-/*.semantics {
-                // Provide localized description of the error
-                if (isErrorsignupname) error(name.value)
-            }*//*
 
                 shape = Shapesaaldawaa.small,
                 colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -137,8 +141,9 @@ fun Signup(navController: NavController) {
                         .fillMaxWidth(0.9f)
                         .align(alignment = Alignment.Start)
                         .padding(start = 20.dp),
-                    text = "empty name",
+                    text = "name error or empty",
                     color = errormessege,
+                    fontSize = 12.sp
                 )
             }//}
 
@@ -164,11 +169,12 @@ fun Signup(navController: NavController) {
                             .fillMaxWidth(0.4f)
                             .clip(shape = Shapesaaldawaa.small)
                     ) {
-                        Text(stringResource(id = R.string.title), color = textcolor)
+                        Text(chosentitle, color = textcolor)
                         Icon(
                             imageVector = Icons.Filled.ArrowDropDown,
                             tint = textcolor,
                             contentDescription = null,
+                            modifier = Modifier.padding(start = 15.dp)
 
                             )
                     }
@@ -190,7 +196,7 @@ fun Signup(navController: NavController) {
                                             chosentitle = label
 
                                         }
-                                        title[1] -> {
+                                        title[1].toString() -> {
                                             chosentitle = label
 
                                         }
@@ -213,7 +219,7 @@ fun Signup(navController: NavController) {
                             .clip(shape = Shapesaaldawaa.small)
 
                     ) {
-                        Text(text = stringResource(id = R.string.gender), color = textcolor)
+                        Text(chosengender, color = textcolor)
                         Icon(
                             imageVector = Icons.Filled.ArrowDropDown,
                             tint = textcolor,
@@ -235,12 +241,12 @@ fun Signup(navController: NavController) {
                                     expandedgender = false
 
                                     when (label) {
-                                        "Male" -> {
+                                        gender[0] -> {
                                             chosengender = label
 
 
                                         }
-                                        "Female" -> {
+                                        gender[1] -> {
                                             chosengender = label
 
                                         }
@@ -257,10 +263,11 @@ fun Signup(navController: NavController) {
 
             OutlinedTextField(
 
-                value = email.value,
+                value = signupemail.value,
                 onValueChange = {
-                    email.value = it
-                    isErrorsignupemail = false
+                        signupemail.value= it
+                    isErrorsignupemail= false
+
                 },
                 placeholder = {
                     Text(
@@ -274,7 +281,7 @@ fun Signup(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth(0.9f)
                     .clip(shape = Shapesaaldawaa.small)
-                    .height(49.dp)
+                    .height(53.dp)
                     .background(color = labelcolor),
                 textStyle = TextStyle(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -289,8 +296,9 @@ fun Signup(navController: NavController) {
                         .fillMaxWidth(0.9f)
                         .align(alignment = Alignment.Start)
                         .padding(start = 20.dp),
-                    text = "email error",
+                    text = "email error or empty",
                     color = errormessege,
+                    fontSize = 12.sp
                 )
             }
             Spacer(modifier = Modifier.padding(10.dp))
@@ -298,10 +306,11 @@ fun Signup(navController: NavController) {
 
             OutlinedTextField(
 
-                value = phonenum.value,
+                value = signupphonenum.value,
                 onValueChange = {
-                    phonenum.value = it
-                    isErrorsignupphone = false
+                    signupphonenum.value= it
+                    isErrorsignupphone =false
+
                 },
                 placeholder = {
                     Text(
@@ -315,7 +324,7 @@ fun Signup(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth(0.9f)
                     .clip(shape = Shapesaaldawaa.small)
-                    .height(49.dp)
+                    .height(53.dp)
                     .background(color = labelcolor),
                 textStyle = TextStyle(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -330,8 +339,9 @@ fun Signup(navController: NavController) {
                         .fillMaxWidth(0.9f)
                         .align(alignment = Alignment.Start)
                         .padding(start = 20.dp),
-                    text = "empty phone",
+                    text = "phonenumber error or Empty",
                     color = errormessege,
+                    fontSize = 12.sp
                 )
             }
 
@@ -339,10 +349,11 @@ fun Signup(navController: NavController) {
 
             OutlinedTextField(
 
-                value = myBirthDate.value,
+                value = signupmyBirthDate.value,
                 onValueChange = {
-                    myBirthDate.value = it
+                    signupmyBirthDate.value= it
                     isErrorsignupbirth = false
+
                 },
                 placeholder = {
                     Text(
@@ -355,7 +366,7 @@ fun Signup(navController: NavController) {
                 singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth(0.9f)
-                    .height(49.dp)
+                    .height(53.dp)
                     .clip(shape = Shapesaaldawaa.small)
                     .background(
                         color = labelcolor
@@ -385,7 +396,7 @@ fun Signup(navController: NavController) {
                             context,
                             R.style.calendertheme,
                             { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
-                                myBirthDate.value = "$mDayOfMonth - ${mMonth + 1} - $mYear"
+                                signupmyBirthDate.value = "$mDayOfMonth - ${mMonth + 1} - $mYear"
                             }, mYear, mMonth, mDay
                         )
                         mDatePickerDialog.show()
@@ -409,6 +420,7 @@ fun Signup(navController: NavController) {
                         .padding(start = 20.dp),
                     text = "birthday is empty",
                     color = errormessege,
+                    fontSize = 12.sp
                 )
             }
 
@@ -418,10 +430,11 @@ fun Signup(navController: NavController) {
 
             OutlinedTextField(
 
-                value = passwordsignup.value,
+                value = signuppassword.value,
                 onValueChange = {
-                    passwordsignup.value = it
+                    signuppassword.value =it
                     isErrorsignuppass = false
+
                 },
                 placeholder = {
                     Text(
@@ -434,7 +447,7 @@ fun Signup(navController: NavController) {
                 singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth(0.9f)
-                    .height(49.dp)
+                    .height(53.dp)
                     .clip(shape = Shapesaaldawaa.small)
                     .background(
                         color = labelcolor
@@ -445,11 +458,9 @@ fun Signup(navController: NavController) {
                 ),
 
                 shape = Shapesaaldawaa.small,
-                */
-/*colors = TextFieldDefaults.outlinedTextFieldColors(
-                    unfocusedBorderColor = Transparent,
-                    textColor = Black
-                ),*//*
+
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+
 
                 trailingIcon = {
                     IconButton(onClick = {
@@ -475,8 +486,9 @@ fun Signup(navController: NavController) {
                         .fillMaxWidth(0.9f)
                         .align(alignment = Alignment.Start)
                         .padding(start = 20.dp),
-                    text = "password empty",
+                    text = "password error empty or not match",
                     color = errormessege,
+                    fontSize = 12.sp
                 )
             }
             Spacer(modifier = Modifier.padding(10.dp))
@@ -484,9 +496,9 @@ fun Signup(navController: NavController) {
 
             OutlinedTextField(
 
-                value = confirmpassword.value,
+                value = signupconfirmpassword.value,
                 onValueChange = {
-                    confirmpassword.value = it
+                    signupconfirmpassword.value = it
                     isErrorsignupconfirmpass = false
                 },
                 placeholder = {
@@ -499,7 +511,7 @@ fun Signup(navController: NavController) {
                 singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth(0.9f)
-                    .height(49.dp)
+                    .height(53.dp)
                     .clip(shape = Shapesaaldawaa.small)
                     .background(
                         color = labelcolor
@@ -510,11 +522,7 @@ fun Signup(navController: NavController) {
                 ),
 
                 shape = Shapesaaldawaa.small,
-                */
-/*colors = TextFieldDefaults.outlinedTextFieldColors(
-                    unfocusedBorderColor = Transparent,
-                    textColor = Black
-                ),*//*
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
 
 
                 trailingIcon = {
@@ -544,6 +552,7 @@ fun Signup(navController: NavController) {
                         .padding(start = 20.dp),
                     text = "empty confirm password",
                     color = errormessege,
+                    fontSize = 12.sp
                 )
             }
 
@@ -574,40 +583,39 @@ fun Signup(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth(0.9f)
                     .clip(shape = Shapesaaldawaa.small)
-                    .height(49.dp),
+                    .height(53.dp),
                 colors = ButtonDefaults.outlinedButtonColors(Color.Transparent),
                 shape = Shapesaaldawaa.small,
                 border = BorderStroke(2.dp, textcolor),
                 onClick = {
-                    when {
-                        name.value.isEmpty() -> {
+
+                     if ( !validationHelper.emptyvalidation(signuname.value))  {
                             isErrorsignupname = true
                         }
-                        email.value.isEmpty() -> {
+                     if (!validationHelper.emailvalidation(signupemail.value)) {
                             isErrorsignupemail = true
                         }
-                        phonenum.value.isEmpty() -> {
+                     if (!validationHelper.phonenumvalidation(signupphonenum.value)) {
                             isErrorsignupphone = true
                         }
-                        myBirthDate.value.isEmpty() -> {
+                     if (!validationHelper.emptyvalidation(signupmyBirthDate.value)){
                             isErrorsignupbirth = true
                         }
-                        passwordsignup.value.isEmpty() -> {
+                     if (!validationHelper.passwordlvalidation(signuppassword.value)){
                             isErrorsignuppass = true
                         }
-                        confirmpassword.value.isEmpty() -> {
+                     if (!validationHelper.passwordlvalidation(signupconfirmpassword.value)) {
                             isErrorsignupconfirmpass = true
                         }
-                        */
-/*email.value.isEmpty() -> {
-                        isErrorsignupname = true
+                    if (!validationHelper.confirmpasswordvalidation(signuppassword.value,signupconfirmpassword.value)) {
+                        isErrorsignupconfirmpass = true
+                        isErrorsignuppass=true
                     }
-                    *//*
+                     else {
+                            //navController.navigate("home")
+                            Toast.makeText(context, "Account Created", Toast.LENGTH_SHORT).show()
+                        }
 
-                        else ->
-                            navController.navigate("home")
-                    }
-                    Toast.makeText(context, "Account Created", Toast.LENGTH_SHORT).show()
 
                 },
 
@@ -622,4 +630,4 @@ fun Signup(navController: NavController) {
             }
         }
     }
-}*/
+}
