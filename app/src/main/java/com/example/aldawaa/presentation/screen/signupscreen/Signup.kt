@@ -29,6 +29,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.blue
+import androidx.core.view.get
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.aldawaa.R
@@ -38,6 +39,7 @@ import com.example.aldawaa.presentation.screen.signupscreen.component.SignupForm
 import com.example.aldawaa.presentation.ui.theme.*
 import com.example.aldawaa.utils.ValidationHelper
 import java.util.*
+import kotlin.time.Duration.Companion.milliseconds
 
 // signup box
 @Composable
@@ -394,11 +396,14 @@ fun Signup(navController: NavController) {
                         mCalendar.time = Date()
                         val mDatePickerDialog = DatePickerDialog(
                             context,
+
                             R.style.calendertheme,
                             { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
                                 signupmyBirthDate.value = "$mDayOfMonth - ${mMonth + 1} - $mYear"
                             }, mYear, mMonth, mDay
                         )
+                        mDatePickerDialog.datePicker.maxDate = mCalendar.timeInMillis
+
                         mDatePickerDialog.show()
                     }) {
 
